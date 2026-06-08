@@ -1,0 +1,32 @@
+[
+    {
+        "laptop_id": 1,
+        "laptop_name": "Inspiron",
+        "laptop_brand": "Dell",
+        "laptop_price": 25000.0
+    },
+    {
+        "laptop_id": 2,
+        "laptop_name": "M4",
+        "laptop_brand": "Apple",
+        "laptop_price": 100000.0
+    },
+    {
+        "laptop_id": 3,
+        "laptop_name": "IdeaPad",
+        "laptop_brand": "Lenovo",
+        "laptop_price": 34000.0
+    },
+    {
+        "laptop_id": 44,
+        "laptop_name": "Vivobook",
+        "laptop_brand": "ASUS",
+        "laptop_price": 44000.0
+    },
+    {
+        "laptop_id": 5,
+        "laptop_name": "Laptop",
+        "laptop_brand": "ACER",
+        "laptop_price": 121345.0
+    }
+]
