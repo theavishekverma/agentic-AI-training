@@ -1,0 +1,30 @@
+[
+    {
+        "id": "1",
+        "name": "Khushi Verma",
+        "grade": "A+",
+        "email": "khushi@email.com",
+        "address": "Wagholi"
+    },
+    {
+        "id": "2",
+        "name": "Avishek",
+        "grade": "C-",
+        "email": "avishek@email.com",
+        "address": "B.A. IRIS"
+    },
+    {
+        "id": "3",
+        "name": "Abhilaha",
+        "grade": "B",
+        "email": "abhilasha@email.com",
+        "address": "Pune"
+    },
+    {
+        "id": "4",
+        "name": "Anjali",
+        "grade": "C",
+        "email": "anjali@email.com",
+        "address": "Baif Road"
+    }
+]

@@ -1,0 +1,22 @@
+{
+    "next_id": 3,
+    "Laptops": {
+        "1": {
+            "name": "Dell XPS 13",
+            "brand": "Dell",
+            "price": 999.99,
+            "processor": "Intel i7",
+            "ram": 16,
+            "storage": 512
+        },
+        "2": {
+            "id": 2,
+            "name": "Latitude",
+            "brand": "Dell",
+            "price": 999.99,
+            "processor": "Intel i5",
+            "ram": 128,
+            "storage": 128
+        }
+    }
+}
