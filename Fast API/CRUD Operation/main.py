@@ -170,6 +170,19 @@ def create_laptop(
         "laptop": new_laptop
     }
 
+
+# @app.post("/laptops", status_code=201)
+# def create_laptop(
+#     laptop: LaptopCreate,
+#     db:      dict = Depends(get_db),
+#     next_id: int  = Depends(get_next_id),
+# ):
+#     new_laptop = {"id": next_id, **laptop.model_dump()}
+#     db["laptops"][str(next_id)] = new_laptop
+#     db["next_id"] = next_id + 1
+#     write_json(db)
+#     return {"message": "✅ Laptop created", "laptop": new_laptop}
+
 # ── READ ALL ───────────────────────────────────────────────────────────────
 @app.get("/laptops", tags=["Laptops"], summary="Get all laptops")
 def get_all_laptops(

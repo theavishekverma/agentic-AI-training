@@ -1,0 +1,12 @@
+{
+    "next_id": 2,
+    "students": {
+        "1": {
+            "id": 1,
+            "name": "Avishek",
+            "age": 38,
+            "grade": "A+",
+            "subject": "Maths"
+        }
+    }
+}
