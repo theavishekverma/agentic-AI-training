@@ -1,6 +1,7 @@
 # crud.py
 import json
 import os
+from fastapi.responses import JSONResponse
 
 FILE_PATH = "studentsdata.json"
 
@@ -25,7 +26,7 @@ def create_student_record(student_data: dict) -> dict:
     with open(FILE_PATH, "w") as file:
         json.dump(current_data, file, indent=4)
 
-    return {"status": "success", "data": student_data}
+    return JSONResponse({"status": "success", "data": student_data})
 
 def read_student_records() -> list:
     """
@@ -49,7 +50,7 @@ def update_student_record(student_id: str, updated_data: dict) -> dict:
             record.update(updated_data)
             with open(FILE_PATH, "w") as file:
                 json.dump(records, file, indent=4)
-            return {"status": "success", "data": record}
+            return JSONResponse({"status": "success", "data": record})
     return {"status": "error", "message": "Student not found"}
 
 def delete_student_record(student_id: str) -> dict:
@@ -75,7 +76,8 @@ def get_student_record(student_id: str) -> dict:
     for record in records:
         if record.get("id") == student_id:
             return {"status": "success", "data": record}
-    return {"status": "error", "message": "Student not found"}  
+    return JSONResponse({"status": "error", "message": "Student not found"})
+
 
 def get_all_student_records() -> dict:
     """
@@ -84,20 +86,33 @@ def get_all_student_records() -> dict:
     records = read_student_records()
     return {"status": "success", "data": records}
 
+
 def clear_all_records() -> dict:
-    """
-    Clears all student records from the storage file.
-    """
+  
+    # Clears all student records from the storage file.
+  
     with open(FILE_PATH, "w") as file:
         json.dump([], file, indent=4)
     return {"status": "success", "message": "All student records cleared"}
 
-def count_student_records() -> dict:
-    """
-    Counts the total number of student records.
-    """
-    records = read_student_records()
-    return {"status": "success", "count": len(records)}
+# def count_student_records() -> dict:
+#     #Counts the total number of student records.
+#     records = read_student_records()
+#     return {"status": "success", "count": len(records)}
+
+def count_student_records():
+    with open(FILE_PATH, 'r') as file:
+        data = json.load(file)
+    
+    if isinstance(data, list):
+        total_records = len(data)
+        print(f"Total student records: {total_records}")
+        return total_records
+    else:
+        print("Invalid data format")
+        return 0
+
+    
 
 def find_students_by_name(name: str) -> dict:
     """
