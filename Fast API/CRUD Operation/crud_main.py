@@ -208,4 +208,12 @@ def count_students():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
     
-
+@app.delete("/students/clear", status_code=200)
+def clear_students():
+    try:
+        from crud_file import clear_all_records
+        result = clear_all_records()        
+        return JSONResponse (result)
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
