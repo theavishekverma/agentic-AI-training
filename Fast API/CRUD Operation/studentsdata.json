@@ -4,7 +4,7 @@
         "name": "Khushi",
         "grade": "A+",
         "email": "khushi@email.com",
-        "address": "Wagholi"
+        "address": "Pune"
     },
     {
         "id": "2",
@@ -26,5 +26,12 @@
         "grade": "C",
         "email": "anjali@email.com",
         "address": "Baif Road"
+    },
+    {
+        "id": "6",
+        "name": "Yash",
+        "grade": "B+",
+        "email": "yash@email.com",
+        "address": "GAT No 1190 & 1191, Flat No A1 902, B.A. IRIS, Sambhaji Nagar, Baif Road, Wagholi, Haveli"
     }
 ]
