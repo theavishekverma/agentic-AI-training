@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from auth import verify_api_key
 from pydantic import BaseModel, Field
 from typing import Optional
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 # ─── IMPORT YOUR CRUD FUNCTION HERE ───
 # "from crud" refers to crud.py, "import create_student_record" is the specific function
@@ -18,7 +20,7 @@ from crud_file import update_student_email
 from crud_file import update_student_address
 from crud_file import find_students_by_name
 from crud_file import find_students_by_grade
-from crud_file import count_student_records    
+from crud_file import count_student_records  
 from crud_file import clear_all_records
 
 
@@ -29,6 +31,14 @@ app = FastAPI(
     dependencies=[Depends(verify_api_key)]  # Global dependency for API Key validation
 )
 
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],      # tighten this in production
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Define the Pydantic schema for validation
 class StudentSchema(BaseModel):
@@ -59,7 +69,7 @@ def get_all_students():
         from crud_file import read_student_records
         students = read_student_records()
         
-        return {"status": "success", "data": students}
+        return JSONResponse({"status": "success", "data": students})
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
@@ -183,7 +193,7 @@ def find_students_by_grade(grade: str):
         from crud_file import find_students_by_grade
         result = find_students_by_grade(grade)
         
-        return result
+        return JSONResponse (result)
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
@@ -191,13 +201,13 @@ def find_students_by_grade(grade: str):
 @app.get("/students/count", status_code=200)
 def count_students():
     try:
-        from crud_file import count_students
-        result = count_students()
-        
-        return result
+        from crud_file import count_student_records
+        result = count_student_records()        
+        return JSONResponse (result)
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
     
+
 
     
