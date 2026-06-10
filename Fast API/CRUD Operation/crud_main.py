@@ -209,5 +209,3 @@ def count_students():
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
     
 
-
-    
