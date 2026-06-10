@@ -209,5 +209,14 @@ def count_students():
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
     
 
-
+@app.get("/students/count", status_code=200)
+def count_students():
+    try:
+        from crud_file import count_student_records
+        result = count_student_records()        
+        return JSONResponse (result)
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
     
+
