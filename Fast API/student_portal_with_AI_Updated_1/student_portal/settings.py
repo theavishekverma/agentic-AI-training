@@ -52,15 +52,15 @@ FASTAPI_BASE_URL = "http://127.0.0.1:8000"
 FASTAPI_API_KEY = "laptop-key-123"
 
 # Anthropic AI — get your key at https://console.anthropic.com
-ANTHROPIC_API_KEY = "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"
+ANTHROPIC_API_KEY = "API Key"
 
 # Google Gemini AI
 # If your key starts with "AIza" → paste it as GEMINI_API_KEY, leave GEMINI_PROJECT_ID empty
 # If your key starts with "AQ"   → paste it as GEMINI_API_KEY AND set GEMINI_PROJECT_ID
 #   (find your project ID at https://console.cloud.google.com → select project → copy ID)
-GEMINI_API_KEY    =  "AIzaSyBgvja1q0uovp2AwqiqLr0T0giD-g9OBZs"
+GEMINI_API_KEY    =  "API Key"
 #"AQ.Ab8RN6IYbMeqAGEGOFiqOUBkT7pk4J6Wc18O1Ze-AftNa6h4OQ"
-GEMINI_PROJECT_ID = "lustrous-stone-455714-m6"   # required only for AQ keys e.g. "my-project-123456"
+GEMINI_PROJECT_ID = "Project ID"   # required only for AQ keys e.g. "my-project-123456"
 
 # Portal Users — { "username": "password" }
 # New users registered via /register/ are appended here automatically.
