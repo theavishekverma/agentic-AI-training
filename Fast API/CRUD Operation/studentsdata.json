@@ -1,15 +1,15 @@
 [
     {
         "id": "1",
-        "name": "Khushi",
-        "grade": "A+",
-        "email": "khushi@email.com",
-        "address": "Pune"
+        "name": "Khushi Verma",
+        "grade": "A++",
+        "email": "khushiverma0110@email.com",
+        "address": "B.A. IRIS, A1 902"
     },
     {
         "id": "2",
-        "name": "Avishek",
-        "grade": "C-",
+        "name": "Avishek Madan Verma",
+        "grade": "A++",
         "email": "avishek@email.com",
         "address": "B.A. IRIS"
     },
@@ -17,7 +17,7 @@
         "id": "3",
         "name": "Abhilaha",
         "grade": "B",
-        "email": "abhilasha@email.com",
+        "email": "abhilasha.nalage@email.com",
         "address": "Pune"
     },
     {
@@ -28,10 +28,10 @@
         "address": "Baif Road"
     },
     {
-        "id": "6",
-        "name": "Yash",
-        "grade": "B+",
-        "email": "yash@email.com",
-        "address": "GAT No 1190 & 1191, Flat No A1 902, B.A. IRIS, Sambhaji Nagar, Baif Road, Wagholi, Haveli"
+        "id": "5",
+        "name": "Arvind",
+        "grade": "A+++",
+        "email": "arvind@gmail.com",
+        "address": "Flat No A1 903"
     }
 ]

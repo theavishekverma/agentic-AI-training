@@ -190,7 +190,7 @@
           <input
             type="text"
             name="username"
-            placeholder="Enter username"
+            placeholder="Username"
             value="{{ request.POST.username|default:'' }}"
             autocomplete="username"
             autofocus
@@ -206,7 +206,7 @@
           <input
             type="password"
             name="password"
-            placeholder="Enter password"
+            placeholder="Password"
             autocomplete="current-password"
             required
           />
@@ -218,8 +218,8 @@
 
     <div class="hint-strip">
       Default credentials:<br>
-      Username: <strong>admin</strong> &nbsp;|&nbsp; Password: <strong>admin123</strong><br>
-      Change these in <strong>settings.py</strong> before going live.
+      Username: <strong>admin</strong> &nbsp;|&nbsp; Password: <strong>password</strong><br>
+      Change these in <strong>settings.py</strong> file before going live.
     </div>
   </div>
 

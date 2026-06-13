@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — Student Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #0d1117;
+      --surface:  #161b22;
+      --surface2: #1c2330;
+      --border:   #2d3748;
+      --accent:   #3b82f6;
+      --green:    #22c55e;
+      --red:      #ef4444;
+      --text:     #e2e8f0;
+      --muted:    #64748b;
+      --font-head: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg); color: var(--text); font-family: var(--font-body);
+      min-height: 100vh; display: flex; align-items: center;
+      justify-content: center; padding: 20px;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px; opacity: 0.2; pointer-events: none;
+    }
+
+    .wrap { width: 100%; max-width: 420px; position: relative; z-index: 1; }
+
+    .brand { text-align: center; margin-bottom: 28px; }
+    .brand-icon {
+      width: 54px; height: 54px; background: var(--accent); border-radius: 14px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 12px; box-shadow: 0 0 28px rgba(59,130,246,.35);
+    }
+    .brand h1 { font-family: var(--font-head); font-size: 22px; font-weight: 700; }
+    .brand p  { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 30px 32px;
+    }
+    .card-title { font-family: var(--font-head); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .card-sub   { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-size: 11px; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px;
+    }
+    .input-wrap { position: relative; }
+    .input-icon {
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      font-size: 14px; color: var(--muted); pointer-events: none;
+    }
+    .form-group input {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); padding: 10px 14px 10px 38px;
+      border-radius: 8px; font-size: 13px; font-family: var(--font-body); outline: none;
+      transition: border-color .15s;
+    }
+    .form-group input:focus { border-color: var(--accent); }
+    .hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    /* Password strength bar */
+    .strength-bar {
+      height: 3px; border-radius: 99px; background: var(--border);
+      margin-top: 8px; overflow: hidden;
+    }
+    .strength-fill {
+      height: 100%; border-radius: 99px; width: 0;
+      transition: width .3s, background .3s;
+    }
+
+    /* Match indicator */
+    .match-indicator { font-size: 11px; margin-top: 4px; }
+
+    .alert-error {
+      background: #2d1212; border: 1px solid #7f1d1d; color: #fca5a5;
+      padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 16px;
+    }
+
+    /* Success state */
+    .success-box {
+      text-align: center; padding: 12px 0 4px;
+    }
+    .success-icon {
+      width: 56px; height: 56px; background: #0d2a1a; border: 2px solid var(--green);
+      border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 14px;
+    }
+    .success-box h3 { font-family: var(--font-head); font-size: 17px; margin-bottom: 6px; }
+    .success-box p  { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .settings-preview {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 14px; text-align: left;
+      font-family: monospace; font-size: 12px; color: #86efac; margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      cursor: pointer; text-decoration: none; border: none;
+      font-family: var(--font-head); transition: opacity .15s;
+    }
+    .btn:hover { opacity: .88; }
+    .btn-primary { background: var(--accent); color: #fff; width: 100%; }
+    .btn-ghost   {
+      background: transparent; color: var(--muted);
+      border: 1px solid var(--border); font-size: 13px;
+    }
+    .btn-ghost:hover { color: var(--text); }
+
+    .back-link {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      margin-top: 18px; font-size: 13px; color: var(--muted); text-decoration: none;
+      transition: color .15s;
+    }
+    .back-link:hover { color: var(--text); }
+
+    .api-note {
+      text-align: center; margin-top: 18px; font-size: 11px; color: var(--muted);
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-icon">🎓</div>
+    <h1>Student Portal</h1>
+    <p>FastAPI + Django Management System</p>
+  </div>
+
+  <div class="card">
+
+    {% if success %}
+    <!-- ── Success state ── -->
+    <div class="success-box">
+      <div class="success-icon">✓</div>
+      <h3>Account created!</h3>
+      <p>User <strong>{{ success }}</strong> has been registered and saved to <code>settings.py</code>.</p>
+      <div class="settings-preview">
+PORTAL_USERS = {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"admin": "admin123",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"{{ success }}": "••••••",<br>
+}
+      </div>
+      <a href="/login/" class="btn btn-primary">Go to Login →</a>
+    </div>
+
+    {% else %}
+    <!-- ── Registration form ── -->
+    <p class="card-title">Create new account</p>
+    <p class="card-sub">New users are saved directly to <code>settings.py</code></p>
+
+    {% if error %}
+    <div class="alert-error">⚠ {{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="/register/" id="regForm">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label>Username</label>
+        <div class="input-wrap">
+          <span class="input-icon">👤</span>
+          <input type="text" name="username" id="username"
+                 placeholder="Min. 3 characters"
+                 value="{{ request.POST.username|default:'' }}"
+                 autocomplete="username" autofocus required />
+        </div>
+        <p class="hint">Letters, numbers, underscores only</p>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input type="password" name="password" id="password"
+                 placeholder="Min. 6 characters"
+                 autocomplete="new-password" required />
+        </div>
+        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+        <p class="hint" id="strengthLabel">Enter a password</p>
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input type="password" name="confirm_password" id="confirmPwd"
+                 placeholder="Re-enter password"
+                 autocomplete="new-password" required />
+        </div>
+        <p class="match-indicator" id="matchIndicator"></p>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="margin-top:8px">
+        Create Account →
+      </button>
+    </form>
+    {% endif %}
+
+  </div>
+
+  <a href="/login/" class="back-link">← Back to login</a>
+
+  <div class="api-note">
+    <span class="dot"></span>
+    Connected to FastAPI on port 8000
+  </div>
+
+</div>
+
+<script>
+  const pwdInput    = document.getElementById('password');
+  const confirmInput= document.getElementById('confirmPwd');
+  const fill        = document.getElementById('strengthFill');
+  const label       = document.getElementById('strengthLabel');
+  const matchEl     = document.getElementById('matchIndicator');
+
+  function scorePassword(p) {
+    let s = 0;
+    if (p.length >= 6)  s++;
+    if (p.length >= 10) s++;
+    if (/[A-Z]/.test(p)) s++;
+    if (/[0-9]/.test(p)) s++;
+    if (/[^A-Za-z0-9]/.test(p)) s++;
+    return s;
+  }
+
+  if (pwdInput) {
+    pwdInput.addEventListener('input', () => {
+      const v = pwdInput.value;
+      const score = scorePassword(v);
+      const pct   = Math.min(score / 5 * 100, 100);
+      const colors = ['#ef4444','#f59e0b','#f59e0b','#22c55e','#22c55e','#22c55e'];
+      const labels = ['','Weak','Fair','Fair','Strong','Very strong'];
+      fill.style.width      = pct + '%';
+      fill.style.background = colors[score] || '#ef4444';
+      label.textContent     = v.length === 0 ? 'Enter a password' : (labels[score] || 'Weak');
+      checkMatch();
+    });
+  }
+
+  if (confirmInput) {
+    confirmInput.addEventListener('input', checkMatch);
+  }
+
+  function checkMatch() {
+    if (!confirmInput || !pwdInput) return;
+    if (confirmInput.value === '') { matchEl.textContent = ''; return; }
+    if (confirmInput.value === pwdInput.value) {
+      matchEl.style.color = '#22c55e';
+      matchEl.textContent = '✓ Passwords match';
+    } else {
+      matchEl.style.color = '#ef4444';
+      matchEl.textContent = '✗ Passwords do not match';
+    }
+  }
+</script>
+</body>
+</html>

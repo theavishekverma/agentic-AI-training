@@ -181,3 +181,18 @@ def update_student_name(student_id: str, new_name: str) -> dict:
                 json.dump(records, file, indent=4)
             return {"status": "success", "data": record}
     return {"status": "error", "message": "Student not found"}
+
+# Update all record for 1 student only / Updates an existing student record identified by student_id.
+
+def update_student_record(student_id: str, updated_data: dict) -> dict:
+    """
+    Updates an existing student record identified by student_id.
+    """
+    records = read_student_records()
+    for record in records:
+        if record.get("id") == student_id:
+            record.update(updated_data)
+            with open(FILE_PATH, "w") as file:
+                json.dump(records, file, indent=4)
+            return {"status": "success", "data": record}
+    return {"status": "error", "message": "Student not found"}  

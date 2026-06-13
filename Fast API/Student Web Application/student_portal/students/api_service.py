@@ -138,3 +138,6 @@ def search_by_grade(grade):
     if err:
         return [], err
     return data.get("data", []), None
+
+def update_student_record(student_id, updated_data):
+    return _put(f"/students/update_student/{student_id}", data=updated_data)
