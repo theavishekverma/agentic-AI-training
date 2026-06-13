@@ -207,3 +207,13 @@ def count_students():
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
+    
+@app.put("/students/update_student/{student_id}", status_code=200)
+def update_student_record(student_id: str, updated_data: dict):
+    try:
+        from crud_file import update_student_record
+        result = update_student_record(student_id, updated_data)
+        return JSONResponse (result)
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")

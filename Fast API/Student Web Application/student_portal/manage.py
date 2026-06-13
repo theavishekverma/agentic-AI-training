@@ -5,7 +5,7 @@ import sys
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'student_portal.settings')
     try:
-        from django.core.management import execute_from_command_line
+        from django.core.management import execute_from_command_line # type: ignore
     except ImportError as exc:
         raise ImportError(
             "Couldn't import Django. Make sure it's installed: pip install django"

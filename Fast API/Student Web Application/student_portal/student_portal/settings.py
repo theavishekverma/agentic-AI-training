@@ -49,7 +49,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # FastAPI Backend Configuration
 FASTAPI_BASE_URL = "http://127.0.0.1:8000"
-FASTAPI_API_KEY = "laptop-key-123"
+FASTAPI_API_KEY = "admin"
 
 # Portal Login Credentials (change these!)
 PORTAL_USERNAME = "admin"

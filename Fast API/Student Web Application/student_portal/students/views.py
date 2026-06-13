@@ -154,3 +154,18 @@ def quick_update(request, student_id, field):
         if err:
             return redirect(f"/?error={err}")
     return redirect("/?success=updated")
+
+@login_required
+def update_student_record(request, student_id):
+    """Update all fields for a student."""
+    if request.method == "POST":
+        updated_data = {
+            "name": request.POST.get("name", "").strip(),
+            "grade": request.POST.get("grade", "").strip(),
+            "email": request.POST.get("email", "").strip() or None,
+            "address": request.POST.get("address", "").strip() or None,
+        }
+        result, err = api_service.update_student_record(student_id, updated_data)
+        if err:
+            return redirect(f"/?error={err}")
+    return redirect("/?success=updated")
