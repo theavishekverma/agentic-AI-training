@@ -52,14 +52,14 @@ FASTAPI_BASE_URL = "http://127.0.0.1:8000"
 FASTAPI_API_KEY = "laptop-key-123"
 
 # Anthropic AI — get your key at https://console.anthropic.com
-ANTHROPIC_API_KEY = "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"
+ANTHROPIC_API_KEY = "API Key"
 
 # Google Gemini AI — get your key at https://aistudio.google.com/app/apikey
 # Supported key formats: starts with "AIza..." or "AQ..."
 # GEMINI_API_KEY = "AQ.Ab8RN6LsCpDmQHkgSzZUjy7vW7juxEymxmWEkecPNWDJB87fug"
 
 # Google Gemini AI — get your key at https://aistudio.google.com/apikey
-GEMINI_API_KEY = "AQ.Ab8RN6LsCpDmQHkgSzZUjy7vW7juxEymxmWEkecPNWDJB87fug"
+GEMINI_API_KEY = "API Key"
 
 # Portal Users — { "username": "password" }
 # New users registered via /register/ are appended here automatically.
