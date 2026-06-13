@@ -55,7 +55,7 @@ FASTAPI_API_KEY = "laptop-key-123"
 ANTHROPIC_API_KEY = "your-anthropic-api-key-here"
 
 # Google Gemini AI — get your key at https://aistudio.google.com/app/apikey
-GEMINI_API_KEY = "AQ.Ab8RN6LQxoWYLZN-VA1kTxhdNjv-TLe_Js_p7ewEvAfEuKXJWw"
+GEMINI_API_KEY = "API Key"
 
 # Google Gemini AI — get your key at https://aistudio.google.com/apikey
 # GEMINI_API_KEY = "your-gemini-api-key-here"
