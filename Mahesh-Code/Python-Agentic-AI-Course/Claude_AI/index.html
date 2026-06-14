@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swiggy – Order Food Online</title>
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #2ECC71;
+      --green-dark:  #27AE60;
+      --green-light: #D5F4E6;
+      --orange:      #FF6B35;
+      --red:         #E74C3C;
+      --blue:        #3498DB;
+      --white:       #FFFFFF;
+      --gray-light:  #F8F9FA;
+      --gray-med:    #95A5A6;
+      --gray-dark:   #2C3E50;
+      --black:       #1A1A1A;
+      --warning:     #F39C12;
+      --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--gray-dark);
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: var(--font); cursor: pointer; border: none; outline: none; }
+
+    /* ════════════════════════════════════════
+       NAVBAR
+    ════════════════════════════════════════ */
+    .navbar {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--white);
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      padding: 0 5%;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; gap: 24px;
+      height: 68px;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 26px; font-weight: 800; color: var(--orange);
+      letter-spacing: -0.5px; flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; color: var(--white);
+    }
+
+    /* Location */
+    .location-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 8px;
+      border: 1.5px solid #E0E0E0; background: var(--white);
+      font-size: 13px; font-weight: 600; color: var(--gray-dark);
+      transition: border-color .2s;
+      cursor: pointer; flex-shrink: 0;
+    }
+    .location-btn:hover { border-color: var(--orange); }
+    .location-btn .pin { color: var(--orange); font-size: 16px; }
+    .location-btn .caret { color: var(--gray-med); font-size: 11px; margin-left: 2px; }
+
+    /* Nav search */
+    .nav-search {
+      flex: 1; position: relative; max-width: 420px;
+    }
+    .nav-search input {
+      width: 100%; height: 42px;
+      padding: 0 16px 0 42px;
+      border: 1.5px solid #E0E0E0; border-radius: 10px;
+      font-size: 14px; color: var(--gray-dark);
+      background: var(--gray-light);
+      outline: none; transition: border-color .2s, background .2s;
+    }
+    .nav-search input:focus { border-color: var(--green); background: var(--white); }
+    .nav-search .s-icon {
+      position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-med); font-size: 16px; pointer-events: none;
+    }
+
+    /* Nav links */
+    .nav-links {
+      display: flex; align-items: center; gap: 4px;
+      margin-left: auto; flex-shrink: 0;
+    }
+    .nav-links a, .nav-links button {
+      padding: 8px 14px; border-radius: 8px;
+      font-size: 13px; font-weight: 600; color: var(--gray-dark);
+      background: none; transition: background .2s, color .2s;
+    }
+    .nav-links a:hover, .nav-links button:hover {
+      background: var(--gray-light); color: var(--green-dark);
+    }
+    .btn-signup {
+      background: var(--green) !important;
+      color: var(--white) !important;
+      box-shadow: 0 4px 12px rgba(46,204,113,.3);
+    }
+    .btn-signup:hover { background: var(--green-dark) !important; }
+
+    /* Cart badge */
+    .cart-btn {
+      position: relative; padding: 8px 14px !important;
+    }
+    .cart-count {
+      position: absolute; top: 2px; right: 6px;
+      background: var(--orange); color: var(--white);
+      font-size: 10px; font-weight: 700;
+      width: 17px; height: 17px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
+    .hero {
+      background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+      padding: 70px 5% 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(46,204,113,.15) 0%, transparent 60%);
+    }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; gap: 48px;
+      position: relative; z-index: 1;
+    }
+    .hero-text { flex: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(46,204,113,.15); border: 1px solid rgba(46,204,113,.3);
+      color: var(--green); font-size: 12px; font-weight: 600;
+      padding: 5px 12px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .hero-text h1 {
+      font-size: 48px; font-weight: 800; color: var(--white);
+      line-height: 56px; margin-bottom: 16px;
+    }
+    .hero-text h1 span { color: var(--orange); }
+    .hero-text p { font-size: 16px; color: rgba(255,255,255,.65); line-height: 26px; margin-bottom: 32px; }
+
+    /* Hero delivery search */
+    .delivery-search {
+      background: var(--white); border-radius: 14px;
+      padding: 6px 6px 6px 16px;
+      display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.25);
+    }
+    .delivery-search .ds-icon { color: var(--green); font-size: 20px; flex-shrink: 0; }
+    .delivery-search input {
+      flex: 1; border: none; outline: none;
+      font-size: 15px; color: var(--gray-dark);
+      font-family: var(--font);
+    }
+    .delivery-search input::placeholder { color: var(--gray-med); }
+    .delivery-search .ds-btn {
+      background: var(--orange); color: var(--white);
+      padding: 12px 22px; border-radius: 10px;
+      font-size: 14px; font-weight: 700;
+      transition: background .2s;
+      white-space: nowrap;
+    }
+    .delivery-search .ds-btn:hover { background: #e55a22; }
+
+    /* Hero stats */
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 28px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 22px; font-weight: 800; color: var(--green); }
+    .stat-lbl { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 2px; }
+
+    /* Hero visual */
+    .hero-visual {
+      flex-shrink: 0; width: 360px;
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center;
+    }
+    .hero-food-card {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+      border-radius: 16px; padding: 16px 20px;
+      text-align: center; width: 100px;
+      transition: transform .3s;
+    }
+    .hero-food-card:hover { transform: translateY(-4px); }
+    .hero-food-card .emoji { font-size: 36px; }
+    .hero-food-card .name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.8); margin-top: 6px; }
+
+    /* ════════════════════════════════════════
+       OFFERS STRIP
+    ════════════════════════════════════════ */
+    .offers-strip { background: var(--orange); padding: 12px 5%; overflow: hidden; }
+    .offers-ticker {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; gap: 40px; align-items: center;
+      white-space: nowrap; overflow: hidden;
+    }
+    .offer-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--white); font-size: 13px; font-weight: 600;
+      flex-shrink: 0;
+    }
+    .offer-tag .tag-badge {
+      background: rgba(255,255,255,.25); padding: 2px 8px;
+      border-radius: 4px; font-size: 11px; font-weight: 700;
+    }
+
+    /* ════════════════════════════════════════
+       SECTION SHARED
+    ════════════════════════════════════════ */
+    .section { padding: 56px 5%; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .section-header h2 { font-size: 24px; font-weight: 700; }
+    .section-header p { font-size: 13px; color: var(--gray-med); margin-top: 4px; }
+    .see-all {
+      font-size: 13px; font-weight: 700; color: var(--green-dark);
+      display: flex; align-items: center; gap: 4px;
+      transition: gap .2s;
+    }
+    .see-all:hover { gap: 8px; }
+
+    /* ════════════════════════════════════════
+       CATEGORY CHIPS
+    ════════════════════════════════════════ */
+    .categories-section { background: var(--white); padding: 36px 5%; }
+    .category-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .cat-chip {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 14px 18px; border-radius: 14px;
+      background: var(--gray-light); border: 2px solid transparent;
+      cursor: pointer; transition: all .25s; min-width: 80px;
+    }
+    .cat-chip:hover, .cat-chip.active {
+      background: var(--green-light); border-color: var(--green);
+    }
+    .cat-chip .cat-emoji { font-size: 28px; }
+    .cat-chip .cat-name { font-size: 11px; font-weight: 700; color: var(--gray-dark); }
+    .cat-chip.active .cat-name { color: var(--green-dark); }
+
+    /* ════════════════════════════════════════
+       FILTERS BAR
+    ════════════════════════════════════════ */
+    .filters-bar { background: var(--white); padding: 0 5% 20px; border-bottom: 1px solid #F0F0F0; }
+    .filters-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    .filter-chip {
+      padding: 7px 16px; border-radius: 20px;
+      border: 1.5px solid #E0E0E0; background: var(--white);
+      font-size: 13px; font-weight: 600; color: var(--gray-dark);
+      cursor: pointer; transition: all .2s;
+    }
+    .filter-chip:hover { border-color: var(--green); color: var(--green-dark); }
+    .filter-chip.active {
+      background: var(--green); border-color: var(--green);
+      color: var(--white);
+    }
+    .filter-label { font-size: 13px; font-weight: 600; color: var(--gray-med); margin-right: 4px; }
+
+    /* ════════════════════════════════════════
+       RESTAURANT CARDS
+    ════════════════════════════════════════ */
+    .restaurant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .r-card {
+      background: var(--white); border-radius: 16px;
+      border: 1px solid #E8E8E8;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+      overflow: hidden; cursor: pointer;
+      transition: all .3s ease;
+    }
+    .r-card:hover {
+      box-shadow: 0 12px 28px rgba(0,0,0,.12);
+      transform: translateY(-4px);
+    }
+    .r-img {
+      height: 180px; width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 64px; position: relative;
+    }
+    .r-img .discount-badge {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,.55));
+      padding: 20px 12px 10px;
+      color: var(--white); font-size: 12px; font-weight: 700;
+    }
+    .r-img .like-btn {
+      position: absolute; top: 10px; right: 10px;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,.9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; cursor: pointer;
+      transition: transform .2s;
+    }
+    .r-img .like-btn:hover { transform: scale(1.15); }
+    .r-body { padding: 14px 16px 16px; }
+    .r-name { font-size: 17px; font-weight: 700; }
+    .r-cuisine { font-size: 12px; color: var(--gray-med); margin-top: 3px; }
+    .r-meta {
+      display: flex; align-items: center; gap: 14px;
+      margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid #F0F0F0;
+      font-size: 13px; color: var(--gray-dark);
+    }
+    .r-rating {
+      display: flex; align-items: center; gap: 4px;
+      font-weight: 700; color: var(--white);
+      background: var(--green-dark);
+      padding: 2px 8px; border-radius: 6px; font-size: 13px;
+    }
+    .r-meta .dot { color: #D0D0D0; }
+    .r-promo {
+      margin-top: 10px;
+      background: var(--green-light); color: var(--green-dark);
+      font-size: 11px; font-weight: 700;
+      padding: 5px 10px; border-radius: 6px;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+
+    /* ════════════════════════════════════════
+       PROMO BANNER
+    ════════════════════════════════════════ */
+    .promo-section { background: var(--gray-light); padding: 48px 5%; }
+    .promo-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    .promo-card {
+      border-radius: 18px; padding: 28px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      overflow: hidden; position: relative;
+    }
+    .promo-card.orange {
+      background: linear-gradient(135deg, #FF6B35, #FF9A56);
+      color: var(--white);
+    }
+    .promo-card.dark {
+      background: linear-gradient(135deg, #2C3E50, #34495E);
+      color: var(--white);
+    }
+    .promo-card.green {
+      background: linear-gradient(135deg, #2ECC71, #27AE60);
+      color: var(--white);
+    }
+    .promo-card.blue {
+      background: linear-gradient(135deg, #3498DB, #2980B9);
+      color: var(--white);
+    }
+    .promo-text h3 { font-size: 22px; font-weight: 800; }
+    .promo-text p  { font-size: 13px; opacity: .85; margin-top: 6px; }
+    .promo-cta {
+      margin-top: 16px; display: inline-block;
+      background: rgba(255,255,255,.2); border: 1.5px solid rgba(255,255,255,.4);
+      color: var(--white); padding: 9px 20px; border-radius: 8px;
+      font-size: 13px; font-weight: 700; transition: background .2s;
+    }
+    .promo-cta:hover { background: rgba(255,255,255,.3); }
+    .promo-emoji { font-size: 72px; opacity: .85; }
+
+    /* ════════════════════════════════════════
+       POPULAR DISHES
+    ════════════════════════════════════════ */
+    .dish-scroll {
+      display: flex; gap: 16px; overflow-x: auto;
+      padding-bottom: 8px; scrollbar-width: none;
+    }
+    .dish-scroll::-webkit-scrollbar { display: none; }
+    .dish-card {
+      flex-shrink: 0; width: 180px;
+      background: var(--white); border-radius: 14px;
+      border: 1px solid #E8E8E8;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+      overflow: hidden; transition: all .3s;
+      cursor: pointer;
+    }
+    .dish-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,.1); }
+    .dish-img {
+      height: 130px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 52px;
+    }
+    .dish-body { padding: 10px 12px 12px; }
+    .dish-name { font-size: 13px; font-weight: 700; }
+    .dish-rest { font-size: 11px; color: var(--gray-med); margin-top: 2px; }
+    .dish-price { font-size: 14px; font-weight: 800; color: var(--green-dark); margin-top: 8px; }
+    .dish-add {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 8px;
+    }
+    .add-btn {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: var(--green); color: var(--white);
+      font-size: 18px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .add-btn:hover { background: var(--green-dark); }
+
+    /* ════════════════════════════════════════
+       HOW IT WORKS
+    ════════════════════════════════════════ */
+    .how-section { background: var(--gray-light); padding: 64px 5%; }
+    .steps-grid {
+      max-width: 900px; margin: 40px auto 0;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      text-align: center;
+    }
+    .step-item { position: relative; }
+    .step-item:not(:last-child)::after {
+      content: '→';
+      position: absolute; right: -20px; top: 28px;
+      font-size: 24px; color: var(--gray-med);
+    }
+    .step-icon {
+      width: 72px; height: 72px; border-radius: 20px;
+      background: var(--white); margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    }
+    .step-num {
+      position: absolute; top: -6px; right: calc(50% - 44px);
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--green); color: var(--white);
+      font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-title { font-size: 16px; font-weight: 700; }
+    .step-desc  { font-size: 13px; color: var(--gray-med); margin-top: 6px; line-height: 20px; }
+
+    /* ════════════════════════════════════════
+       APP DOWNLOAD
+    ════════════════════════════════════════ */
+    .app-section {
+      background: linear-gradient(135deg, #1A1A2E, #0F3460);
+      padding: 64px 5%; color: var(--white);
+    }
+    .app-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 40px;
+    }
+    .app-text h2 { font-size: 32px; font-weight: 800; }
+    .app-text h2 span { color: var(--orange); }
+    .app-text p { font-size: 15px; opacity: .75; margin-top: 10px; line-height: 26px; }
+    .app-btns { display: flex; gap: 14px; margin-top: 28px; flex-wrap: wrap; }
+    .app-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.2);
+      border-radius: 12px; padding: 12px 20px;
+      color: var(--white); transition: background .2s;
+      cursor: pointer;
+    }
+    .app-btn:hover { background: rgba(255,255,255,.18); }
+    .app-btn-icon { font-size: 26px; }
+    .app-btn-text .sub { font-size: 10px; opacity: .7; }
+    .app-btn-text .main { font-size: 15px; font-weight: 700; }
+    .app-mockup { font-size: 120px; text-align: center; }
+
+    /* ════════════════════════════════════════
+       TESTIMONIALS
+    ════════════════════════════════════════ */
+    .testimonials-section { background: var(--white); padding: 64px 5%; }
+    .test-grid {
+      max-width: 1200px; margin: 32px auto 0;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .test-card {
+      background: var(--gray-light); border-radius: 16px; padding: 24px;
+      border: 1px solid #E8E8E8; transition: box-shadow .3s;
+    }
+    .test-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+    .test-stars { color: var(--warning); font-size: 14px; margin-bottom: 12px; }
+    .test-text { font-size: 14px; line-height: 22px; color: var(--gray-dark); font-style: italic; }
+    .test-author { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+    .test-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .test-name { font-size: 13px; font-weight: 700; }
+    .test-loc  { font-size: 11px; color: var(--gray-med); }
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
+    footer { background: var(--black); color: rgba(255,255,255,.65); }
+    .footer-top {
+      max-width: 1200px; margin: 0 auto;
+      padding: 56px 5% 40px;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+    }
+    .footer-brand .logo { color: var(--orange); margin-bottom: 14px; }
+    .footer-brand p { font-size: 13px; line-height: 22px; max-width: 240px; }
+    .footer-social { display: flex; gap: 10px; margin-top: 20px; }
+    .social-btn {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; cursor: pointer; transition: background .2s;
+    }
+    .social-btn:hover { background: rgba(255,255,255,.18); }
+    .footer-col h4 { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 16px; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a { font-size: 13px; transition: color .2s; }
+    .footer-col a:hover { color: var(--green); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 18px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; max-width: 1200px; margin: 0 auto;
+    }
+
+    /* ════════════════════════════════════════
+       FLOATING CART
+    ════════════════════════════════════════ */
+    .floating-cart {
+      position: fixed; bottom: 28px; right: 28px; z-index: 300;
+      background: var(--green); color: var(--white);
+      padding: 14px 22px; border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(46,204,113,.4);
+      display: flex; align-items: center; gap: 12px;
+      cursor: pointer; transition: all .3s;
+      font-weight: 700; font-size: 14px;
+    }
+    .floating-cart:hover { background: var(--green-dark); transform: translateY(-2px); }
+    .floating-cart .fc-count {
+      background: rgba(255,255,255,.25); border-radius: 6px;
+      padding: 2px 8px; font-size: 13px;
+    }
+
+    /* ════════════════════════════════════════
+       TOAST
+    ════════════════════════════════════════ */
+    .toast-container {
+      position: fixed; top: 80px; right: 20px; z-index: 500;
+      display: flex; flex-direction: column; gap: 10px;
+      pointer-events: none;
+    }
+    .toast-msg {
+      background: var(--gray-dark); color: var(--white);
+      padding: 12px 18px; border-radius: 10px;
+      font-size: 13px; font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      animation: slideIn .3s ease, fadeOut .3s ease 2.7s forwards;
+      pointer-events: auto;
+    }
+    @keyframes slideIn  { from { transform: translateX(110%); opacity:0; } to { transform: translateX(0); opacity:1; } }
+    @keyframes fadeOut  { from { opacity: 1; } to { opacity: 0; transform: translateX(110%); } }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero-visual { width: 280px; }
+      .hero-text h1 { font-size: 38px; line-height: 46px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .promo-grid { grid-template-columns: 1fr 1fr; }
+      .test-grid  { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links .hide-mobile { display: none; }
+      .hero-inner { flex-direction: column; gap: 32px; }
+      .hero-visual { width: 100%; }
+      .hero-text h1 { font-size: 30px; line-height: 38px; }
+      .hero-stats { gap: 20px; }
+      .promo-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; gap: 24px; }
+      .step-item::after { display: none; }
+      .test-grid  { grid-template-columns: 1fr; }
+      .app-inner  { flex-direction: column; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero { padding: 48px 5% 56px; }
+      .delivery-search { flex-wrap: wrap; padding: 10px; gap: 8px; }
+      .delivery-search input { width: 100%; }
+      .footer-top { grid-template-columns: 1fr; }
+      .restaurant-grid { grid-template-columns: 1fr; }
+      .floating-cart { bottom: 16px; right: 16px; padding: 12px 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, .r-card, .dish-card, .cat-chip { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ════════ NAVBAR ════════ -->
+<header>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="logo" href="#">
+        <div class="logo-icon">🛵</div>
+        Swiggy
+      </a>
+
+      <button class="location-btn" onclick="showToast('📍 Change delivery location')">
+        <span class="pin">📍</span>
+        <span>Mumbai, MH</span>
+        <span class="caret">▾</span>
+      </button>
+
+      <div class="nav-search">
+        <span class="s-icon">🔍</span>
+        <input type="text" placeholder="Search for restaurants or dishes…" />
+      </div>
+
+      <div class="nav-links">
+        <a href="#" class="hide-mobile">Offers 🔥</a>
+        <a href="#" class="hide-mobile">Help</a>
+        <a href="#" class="hide-mobile">Sign In</a>
+        <button class="btn-signup" onclick="showToast('👋 Sign up to get started!')">Sign Up</button>
+        <a href="#" class="cart-btn" onclick="showToast('🛒 Your cart is empty')">
+          🛒
+          <span class="cart-count">3</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">⚡ Fastest Delivery in India</div>
+      <h1>Craving Something <span>Delicious?</span></h1>
+      <p>Order food from the best restaurants near you.<br/>Delivered hot & fresh in 30 minutes or less.</p>
+
+      <div class="delivery-search">
+        <span class="ds-icon">📍</span>
+        <input type="text" placeholder="Enter your delivery address…" />
+        <button class="ds-btn" onclick="showToast('🔍 Searching restaurants near you…')">Find Food</button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">500+</div>
+          <div class="stat-lbl">Restaurants</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">30 min</div>
+          <div class="stat-lbl">Avg Delivery</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4.8★</div>
+          <div class="stat-lbl">App Rating</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">2M+</div>
+          <div class="stat-lbl">Happy Users</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-food-card"><div class="emoji">🍕</div><div class="name">Pizza</div></div>
+      <div class="hero-food-card"><div class="emoji">🍔</div><div class="name">Burgers</div></div>
+      <div class="hero-food-card"><div class="emoji">🍣</div><div class="name">Sushi</div></div>
+      <div class="hero-food-card"><div class="emoji">🍛</div><div class="name">Biryani</div></div>
+      <div class="hero-food-card"><div class="emoji">🌮</div><div class="name">Tacos</div></div>
+      <div class="hero-food-card"><div class="emoji">🍜</div><div class="name">Noodles</div></div>
+      <div class="hero-food-card"><div class="emoji">🧁</div><div class="name">Desserts</div></div>
+      <div class="hero-food-card"><div class="emoji">🥗</div><div class="name">Healthy</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ OFFERS STRIP ════════ -->
+<div class="offers-strip">
+  <div class="offers-ticker">
+    <div class="offer-tag"><span class="tag-badge">FLAT 40% OFF</span> on your first 3 orders · Use code NEWUSER</div>
+    <div class="offer-tag">🔥</div>
+    <div class="offer-tag"><span class="tag-badge">FREE DELIVERY</span> on orders above ₹199</div>
+    <div class="offer-tag">🔥</div>
+    <div class="offer-tag"><span class="tag-badge">WEEKEND DEAL</span> Extra 20% off every Sat & Sun</div>
+    <div class="offer-tag">🔥</div>
+    <div class="offer-tag"><span class="tag-badge">LATE NIGHT</span> Order after 10 PM — Save 15%</div>
+  </div>
+</div>
+
+<!-- ════════ CATEGORIES ════════ -->
+<section class="categories-section">
+  <div class="category-grid">
+    <div class="cat-chip active" onclick="filterCategory(this)">
+      <span class="cat-emoji">🍽️</span><span class="cat-name">All</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">🍕</span><span class="cat-name">Pizza</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">🍔</span><span class="cat-name">Burgers</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">🍛</span><span class="cat-name">Biryani</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">🍣</span><span class="cat-name">Sushi</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">🌮</span><span class="cat-name">Mexican</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">🍜</span><span class="cat-name">Chinese</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">🥗</span><span class="cat-name">Healthy</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">🍰</span><span class="cat-name">Desserts</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">☕</span><span class="cat-name">Beverages</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">🥪</span><span class="cat-name">Sandwich</span>
+    </div>
+    <div class="cat-chip" onclick="filterCategory(this)">
+      <span class="cat-emoji">🍦</span><span class="cat-name">Ice Cream</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FILTERS BAR ════════ -->
+<div class="filters-bar">
+  <div class="filters-inner">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-chip active" onclick="toggleFilter(this)">⚡ Fast Delivery</button>
+    <button class="filter-chip" onclick="toggleFilter(this)">⭐ Top Rated</button>
+    <button class="filter-chip" onclick="toggleFilter(this)">💰 Under ₹200</button>
+    <button class="filter-chip" onclick="toggleFilter(this)">🌱 Pure Veg</button>
+    <button class="filter-chip" onclick="toggleFilter(this)">🆕 New</button>
+    <button class="filter-chip" onclick="toggleFilter(this)">🎁 Offers</button>
+  </div>
+</div>
+
+<!-- ════════ RESTAURANTS ════════ -->
+<section class="section" style="background:var(--white);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <h2>Restaurants Near You</h2>
+        <p>Based on your location · Mumbai, MH</p>
+      </div>
+      <a href="#" class="see-all" onclick="showToast('Loading all restaurants…'); return false;">See All →</a>
+    </div>
+
+    <div class="restaurant-grid">
+
+      <div class="r-card" onclick="showToast('Opening Burger Palace…')">
+        <div class="r-img" style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2);">
+          🍔
+          <div class="discount-badge">🎁 40% OFF up to ₹80</div>
+          <div class="like-btn">🤍</div>
+        </div>
+        <div class="r-body">
+          <div class="r-name">Burger Palace</div>
+          <div class="r-cuisine">Burgers · American · Fast Food</div>
+          <div class="r-meta">
+            <span class="r-rating">⭐ 4.8</span>
+            <span class="dot">•</span>
+            <span>25–35 min</span>
+            <span class="dot">•</span>
+            <span>₹200 for two</span>
+          </div>
+          <span class="r-promo">🎁 40% OFF up to ₹80</span>
+        </div>
+      </div>
+
+      <div class="r-card" onclick="showToast('Opening Pizza House…')">
+        <div class="r-img" style="background:linear-gradient(135deg,#FCE4EC,#F8BBD0);">
+          🍕
+          <div class="discount-badge">🚀 Free Delivery</div>
+          <div class="like-btn">❤️</div>
+        </div>
+        <div class="r-body">
+          <div class="r-name">Pizza House</div>
+          <div class="r-cuisine">Pizza · Italian · Pasta</div>
+          <div class="r-meta">
+            <span class="r-rating">⭐ 4.6</span>
+            <span class="dot">•</span>
+            <span>30–40 min</span>
+            <span class="dot">•</span>
+            <span>₹350 for two</span>
+          </div>
+          <span class="r-promo">🚀 Free Delivery this week</span>
+        </div>
+      </div>
+
+      <div class="r-card" onclick="showToast('Opening Biryani Bhavan…')">
+        <div class="r-img" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9);">
+          🍛
+          <div class="discount-badge">⭐ Top Rated · 1K+ orders</div>
+          <div class="like-btn">🤍</div>
+        </div>
+        <div class="r-body">
+          <div class="r-name">Biryani Bhavan</div>
+          <div class="r-cuisine">Biryani · Mughlai · North Indian</div>
+          <div class="r-meta">
+            <span class="r-rating">⭐ 4.9</span>
+            <span class="dot">•</span>
+            <span>40–50 min</span>
+            <span class="dot">•</span>
+            <span>₹450 for two</span>
+          </div>
+          <span class="r-promo">🏆 Best Biryani in Mumbai</span>
+        </div>
+      </div>
+
+      <div class="r-card" onclick="showToast('Opening Sushi World…')">
+        <div class="r-img" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB);">
+          🍣
+          <div class="discount-badge">🆕 New · 20% OFF</div>
+          <div class="like-btn">🤍</div>
+        </div>
+        <div class="r-body">
+          <div class="r-name">Sushi World</div>
+          <div class="r-cuisine">Sushi · Japanese · Asian</div>
+          <div class="r-meta">
+            <span class="r-rating">⭐ 4.7</span>
+            <span class="dot">•</span>
+            <span>45–55 min</span>
+            <span class="dot">•</span>
+            <span>₹600 for two</span>
+          </div>
+          <span class="r-promo">🆕 New — 20% OFF first order</span>
+        </div>
+      </div>
+
+      <div class="r-card" onclick="showToast('Opening Taco Town…')">
+        <div class="r-img" style="background:linear-gradient(135deg,#FFF8E1,#FFECB3);">
+          🌮
+          <div class="discount-badge">🌶️ Spicy Specials Today</div>
+          <div class="like-btn">🤍</div>
+        </div>
+        <div class="r-body">
+          <div class="r-name">Taco Town</div>
+          <div class="r-cuisine">Mexican · Wraps · Street Food</div>
+          <div class="r-meta">
+            <span class="r-rating">⭐ 4.5</span>
+            <span class="dot">•</span>
+            <span>20–30 min</span>
+            <span class="dot">•</span>
+            <span>₹250 for two</span>
+          </div>
+          <span class="r-promo">🌶️ Spicy specials every evening</span>
+        </div>
+      </div>
+
+      <div class="r-card" onclick="showToast('Opening The Cake Studio…')">
+        <div class="r-img" style="background:linear-gradient(135deg,#F3E5F5,#E1BEE7);">
+          🧁
+          <div class="discount-badge">🎂 Custom cakes available</div>
+          <div class="like-btn">🤍</div>
+        </div>
+        <div class="r-body">
+          <div class="r-name">The Cake Studio</div>
+          <div class="r-cuisine">Desserts · Bakery · Pastries</div>
+          <div class="r-meta">
+            <span class="r-rating">⭐ 4.8</span>
+            <span class="dot">•</span>
+            <span>30–40 min</span>
+            <span class="dot">•</span>
+            <span>₹300 for two</span>
+          </div>
+          <span class="r-promo">🎂 Custom cakes · Pre-order now</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PROMO BANNERS ════════ -->
+<section class="promo-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>Today's Best Deals 🔥</h2>
+    </div>
+    <div class="promo-grid">
+      <div class="promo-card orange">
+        <div class="promo-text">
+          <h3>First Order Free<br/>Delivery</h3>
+          <p>Use code SWIGGY1 at checkout.<br/>Valid on all restaurants.</p>
+          <a class="promo-cta" onclick="showToast('Code SWIGGY1 copied! 🎉'); return false;" href="#">Copy Code</a>
+        </div>
+        <div class="promo-emoji">🛵</div>
+      </div>
+      <div class="promo-card dark">
+        <div class="promo-text">
+          <h3>Weekend Binge<br/>40% OFF</h3>
+          <p>Every Sat & Sun on orders<br/>above ₹399. Limited time!</p>
+          <a class="promo-cta" onclick="showToast('Weekend deal activated! 🎉'); return false;" href="#">Grab Deal</a>
+        </div>
+        <div class="promo-emoji">🍕</div>
+      </div>
+      <div class="promo-card green">
+        <div class="promo-text">
+          <h3>Healthy Meals<br/>Starting ₹99</h3>
+          <p>Fresh salads, bowls &amp; more.<br/>Guilt-free, taste-full.</p>
+          <a class="promo-cta" onclick="showToast('Browsing healthy meals…'); return false;" href="#">Order Now</a>
+        </div>
+        <div class="promo-emoji">🥗</div>
+      </div>
+      <div class="promo-card blue">
+        <div class="promo-text">
+          <h3>Late Night<br/>Delivery Open</h3>
+          <p>Midnight cravings sorted.<br/>Order till 2 AM every day.</p>
+          <a class="promo-cta" onclick="showToast('Night menu loading… 🌙'); return false;" href="#">Night Menu</a>
+        </div>
+        <div class="promo-emoji">🌙</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ POPULAR DISHES ════════ -->
+<section class="section" style="background:var(--white);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <h2>Popular Dishes</h2>
+        <p>Trending near you right now</p>
+      </div>
+      <a href="#" class="see-all" onclick="showToast('Loading all dishes…'); return false;">See All →</a>
+    </div>
+    <div class="dish-scroll">
+
+      <div class="dish-card">
+        <div class="dish-img" style="background:#FFF3E0;">🍔</div>
+        <div class="dish-body">
+          <div class="dish-name">Classic Smash Burger</div>
+          <div class="dish-rest">Burger Palace</div>
+          <div class="dish-add">
+            <div class="dish-price">₹199</div>
+            <button class="add-btn" onclick="addToCart('Classic Smash Burger')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-img" style="background:#FCE4EC;">🍕</div>
+        <div class="dish-body">
+          <div class="dish-name">Margherita Pizza</div>
+          <div class="dish-rest">Pizza House</div>
+          <div class="dish-add">
+            <div class="dish-price">₹299</div>
+            <button class="add-btn" onclick="addToCart('Margherita Pizza')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-img" style="background:#E8F5E9;">🍛</div>
+        <div class="dish-body">
+          <div class="dish-name">Chicken Biryani</div>
+          <div class="dish-rest">Biryani Bhavan</div>
+          <div class="dish-add">
+            <div class="dish-price">₹249</div>
+            <button class="add-btn" onclick="addToCart('Chicken Biryani')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-img" style="background:#E3F2FD;">🍣</div>
+        <div class="dish-body">
+          <div class="dish-name">Salmon Sushi Set</div>
+          <div class="dish-rest">Sushi World</div>
+          <div class="dish-add">
+            <div class="dish-price">₹449</div>
+            <button class="add-btn" onclick="addToCart('Salmon Sushi Set')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-img" style="background:#FFF8E1;">🌮</div>
+        <div class="dish-body">
+          <div class="dish-name">Chicken Tacos</div>
+          <div class="dish-rest">Taco Town</div>
+          <div class="dish-add">
+            <div class="dish-price">₹179</div>
+            <button class="add-btn" onclick="addToCart('Chicken Tacos')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-img" style="background:#F3E5F5;">🧁</div>
+        <div class="dish-body">
+          <div class="dish-name">Red Velvet Cupcake</div>
+          <div class="dish-rest">The Cake Studio</div>
+          <div class="dish-add">
+            <div class="dish-price">₹99</div>
+            <button class="add-btn" onclick="addToCart('Red Velvet Cupcake')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-img" style="background:#E0F7FA;">🍜</div>
+        <div class="dish-body">
+          <div class="dish-name">Spicy Ramen Bowl</div>
+          <div class="dish-rest">Noodle House</div>
+          <div class="dish-add">
+            <div class="dish-price">₹229</div>
+            <button class="add-btn" onclick="addToCart('Spicy Ramen Bowl')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <div class="dish-img" style="background:#F9FBE7;">🥗</div>
+        <div class="dish-body">
+          <div class="dish-name">Greek Salad Bowl</div>
+          <div class="dish-rest">Healthy Hub</div>
+          <div class="dish-add">
+            <div class="dish-price">₹149</div>
+            <button class="add-btn" onclick="addToCart('Greek Salad Bowl')">+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════ HOW IT WORKS ════════ -->
+<section class="how-section">
+  <div class="section-inner">
+    <div class="section-header" style="justify-content:center; text-align:center; display:block;">
+      <h2>How Swiggy Works</h2>
+      <p style="color:var(--gray-med);margin-top:8px;">Get your favourite food in 3 easy steps</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-item">
+        <div class="step-icon">📍<div class="step-num">1</div></div>
+        <div class="step-title">Set Your Location</div>
+        <div class="step-desc">Enter your delivery address and browse restaurants available near you.</div>
+      </div>
+      <div class="step-item">
+        <div class="step-icon">🛒<div class="step-num">2</div></div>
+        <div class="step-title">Choose Your Food</div>
+        <div class="step-desc">Pick your favourite dishes, customize your order and add to cart.</div>
+      </div>
+      <div class="step-item">
+        <div class="step-icon">🛵<div class="step-num">3</div></div>
+        <div class="step-title">Fast Delivery</div>
+        <div class="step-desc">Track your order in real-time. Hot food delivered to your door.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ TESTIMONIALS ════════ -->
+<section class="testimonials-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>What Our Customers Say ❤️</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <div class="test-text">"Swiggy is absolutely amazing! The food arrives hot every single time and the delivery guys are so professional. Best food delivery app in India!"</div>
+        <div class="test-author">
+          <div class="test-avatar" style="background:#D5F4E6;">😊</div>
+          <div>
+            <div class="test-name">Priya Sharma</div>
+            <div class="test-loc">📍 Mumbai</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <div class="test-text">"I order from Swiggy almost every day. The variety is incredible — from local dhabas to fine dining. And the discounts? Unbeatable!"</div>
+        <div class="test-author">
+          <div class="test-avatar" style="background:#FFF3E0;">😎</div>
+          <div>
+            <div class="test-name">Rahul Mehta</div>
+            <div class="test-loc">📍 Bengaluru</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★☆</div>
+        <div class="test-text">"Late-night deliveries are a lifesaver when you're working overtime. Swiggy never fails me. The live tracking feature is super satisfying to watch!"</div>
+        <div class="test-author">
+          <div class="test-avatar" style="background:#E3F2FD;">🧑‍💻</div>
+          <div>
+            <div class="test-name">Ananya Singh</div>
+            <div class="test-loc">📍 Hyderabad</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ APP DOWNLOAD ════════ -->
+<section class="app-section">
+  <div class="app-inner">
+    <div class="app-text">
+      <h2>Download the <span>Swiggy</span> App</h2>
+      <p>Get exclusive app-only deals, real-time tracking,<br/>and a seamless ordering experience on the go.</p>
+      <div class="app-btns">
+        <button class="app-btn" onclick="showToast('Redirecting to App Store… 🍎')">
+          <span class="app-btn-icon">🍎</span>
+          <div class="app-btn-text">
+            <div class="sub">Download on the</div>
+            <div class="main">App Store</div>
+          </div>
+        </button>
+        <button class="app-btn" onclick="showToast('Redirecting to Google Play… 🤖')">
+          <span class="app-btn-icon">▶️</span>
+          <div class="app-btn-text">
+            <div class="sub">Get it on</div>
+            <div class="main">Google Play</div>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div class="app-mockup">📱</div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">🛵 Swiggy</div>
+      <p>Delivering happiness to your doorstep, one meal at a time. Fast, fresh & always on time.</p>
+      <div class="footer-social">
+        <div class="social-btn" onclick="showToast('Opening Facebook…')">f</div>
+        <div class="social-btn" onclick="showToast('Opening Instagram…')">📸</div>
+        <div class="social-btn" onclick="showToast('Opening Twitter…')">𝕏</div>
+        <div class="social-btn" onclick="showToast('Opening YouTube…')">▶</div>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Swiggy for Business</a></li>
+        <li><a href="#">Investor Relations</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Partner with Us</h4>
+      <ul>
+        <li><a href="#">List Your Restaurant</a></li>
+        <li><a href="#">Become a Delivery Partner</a></li>
+        <li><a href="#">Swiggy Ads</a></li>
+        <li><a href="#">Gift Cards</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Help & Legal</h4>
+      <ul>
+        <li><a href="#">Help Centre</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Swiggy. All rights reserved.</span>
+    <span>Made with ❤️ in India 🇮🇳</span>
+  </div>
+</footer>
+
+<!-- ════════ FLOATING CART ════════ -->
+<div class="floating-cart" id="floatingCart" onclick="showToast('Opening your cart 🛒')">
+  🛒 View Cart
+  <span class="fc-count" id="cartCount">3 items</span>
+</div>
+
+<!-- ════════ JAVASCRIPT ════════ -->
+<script>
+  let cartItems = 3;
+
+  function showToast(msg) {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = 'toast-msg';
+    toast.innerHTML = msg;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 3100);
+  }
+
+  function addToCart(item) {
+    cartItems++;
+    document.getElementById('cartCount').textContent = cartItems + ' items';
+    document.querySelector('.cart-count').textContent = cartItems;
+    showToast('✅ ' + item + ' added to cart!');
+
+    // Pulse the floating cart
+    const fc = document.getElementById('floatingCart');
+    fc.style.transform = 'scale(1.08)';
+    setTimeout(() => fc.style.transform = '', 250);
+  }
+
+  function filterCategory(el) {
+    document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    const name = el.querySelector('.cat-name').textContent;
+    showToast('Showing ' + name + ' restaurants…');
+  }
+
+  function toggleFilter(el) {
+    el.classList.toggle('active');
+    const label = el.textContent.trim();
+    const state = el.classList.contains('active') ? 'applied' : 'removed';
+    showToast('Filter "' + label + '" ' + state);
+  }
+</script>
+
+</body>
+</html>

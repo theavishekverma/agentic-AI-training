@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "name": "Marketing Department"
+    },
+    {
+        "id": 2,
+        "name": "HR Department"
+    },
+    {
+        "id": 3,
+        "name": "Payroll Department"
+    }
+]

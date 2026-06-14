@@ -1,0 +1,38 @@
+[
+    {
+        "name":"Vishal",
+        "age": 25,
+        "city": "Delhi",
+        "isActive": true,
+        "hobbies": ["Reading", "Traveling", "Cooking"],
+        "marks":{
+            "Maths": 85,
+            "Science": 20,
+            "English": 80
+        }
+    },
+    {
+        "name":"Rohit",
+        "age": 30,
+        "city": "Mumbai",
+        "isActive": false,
+        "hobbies": ["Gaming", "Swimming", "Dancing"],
+        "marks":{
+            "Maths": 75,
+            "Science": 80,
+            "English": 70
+        }
+    },
+    {
+        "name":"Anjali",
+        "age": 28,
+        "city": "Bangalore",
+        "isActive": true,
+        "hobbies": [" Painting", "Reading", "Yoga"],
+        "marks":{
+            "Maths": 95,
+            "Science": 90,
+            "English": 85
+        }
+    }
+]

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Delivery App – Design System</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Primary */
+      --green:        #2ECC71;
+      --green-dark:   #27AE60;
+      --green-light:  #D5F4E6;
+      /* Secondary */
+      --orange:       #FF6B35;
+      --red:          #E74C3C;
+      --blue:         #3498DB;
+      /* Neutral */
+      --white:        #FFFFFF;
+      --gray-light:   #F8F9FA;
+      --gray-med:     #95A5A6;
+      --gray-dark:    #2C3E50;
+      --black:        #1A1A1A;
+      /* Semantic */
+      --success:      #27AE60;
+      --warning:      #F39C12;
+      --error:        #E74C3C;
+      --info:         #3498DB;
+      /* Spacing */
+      --xs: 4px;  --s: 8px;  --m: 16px;
+      --l: 24px;  --xl: 32px; --xxl: 48px;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gray-light);
+      color: var(--gray-dark);
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    /* ── Layout ── */
+    .page-header {
+      background: var(--gray-dark);
+      color: var(--white);
+      padding: var(--xl) var(--l);
+      text-align: center;
+    }
+    .page-header h1 { font-size: 32px; line-height: 40px; color: var(--green); }
+    .page-header p  { font-size: 16px; color: var(--gray-med); margin-top: var(--s); }
+
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid #E0E0E0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s);
+      padding: var(--m) var(--l);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--gray-dark);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background .2s, color .2s;
+    }
+    nav a:hover { background: var(--green-light); color: var(--green-dark); }
+
+    main { max-width: 1200px; margin: 0 auto; padding: var(--xl) var(--l); }
+
+    section { margin-bottom: var(--xxl); }
+    section h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gray-dark);
+      border-left: 4px solid var(--green);
+      padding-left: var(--m);
+      margin-bottom: var(--l);
+    }
+    section h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-med);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: var(--m);
+    }
+
+    .group { margin-bottom: var(--xl); }
+
+    /* ── Helpers ── */
+    .row  { display: flex; flex-wrap: wrap; gap: var(--m); }
+    .col  { flex: 1; min-width: 200px; }
+    .label{ font-size: 11px; font-weight: 500; color: var(--gray-med); margin-top: var(--s); display: block; }
+
+    /* ─────────────────────────────────────────────────────────
+       1. COLOR PALETTE
+    ───────────────────────────────────────────────────────── */
+    .swatch-grid { display: flex; flex-wrap: wrap; gap: var(--m); }
+    .swatch {
+      width: 120px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      background: var(--white);
+    }
+    .swatch-color { height: 72px; }
+    .swatch-info  { padding: 8px 10px; }
+    .swatch-info strong { display: block; font-size: 12px; }
+    .swatch-info code   { font-size: 11px; color: var(--gray-med); font-family: monospace; }
+
+    /* ─────────────────────────────────────────────────────────
+       2. TYPOGRAPHY
+    ───────────────────────────────────────────────────────── */
+    .type-scale > * { border-bottom: 1px solid #E0E0E0; padding: var(--s) 0; }
+    .type-label { font-size: 11px; color: var(--gray-med); float: right; font-weight: 500; }
+
+    /* ─────────────────────────────────────────────────────────
+       3. SPACING
+    ───────────────────────────────────────────────────────── */
+    .spacing-row { display: flex; align-items: flex-end; gap: var(--m); flex-wrap: wrap; }
+    .spacing-box { background: var(--green-light); border: 1px dashed var(--green); border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 4px; }
+    .spacing-box span { font-size: 11px; font-weight: 600; color: var(--green-dark); }
+
+    /* ─────────────────────────────────────────────────────────
+       4. BUTTONS
+    ───────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--s);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px; font-weight: 600;
+      border: none; cursor: pointer;
+      transition: all .2s ease;
+      line-height: 20px;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--green);
+      color: var(--white);
+      box-shadow: 0 4px 12px rgba(46,204,113,.3);
+    }
+    .btn-primary:hover  { background: var(--green-dark); }
+    .btn-primary:active { background: #229954; box-shadow: 0 2px 8px rgba(34,153,84,.2); }
+
+    .btn-secondary {
+      background: var(--gray-light);
+      color: var(--gray-dark);
+      border: 1px solid #E0E0E0;
+    }
+    .btn-secondary:hover  { background: #E9ECEF; border-color: #D0D0D0; }
+    .btn-secondary:active { background: #DDE1E6; }
+
+    .btn-tertiary {
+      background: transparent;
+      color: var(--green);
+      border: none;
+    }
+    .btn-tertiary:hover { background: rgba(46,204,113,.1); }
+
+    .btn-danger {
+      background: var(--red);
+      color: var(--white);
+      box-shadow: 0 4px 12px rgba(231,76,60,.25);
+    }
+    .btn-danger:hover { background: #c0392b; }
+
+    .btn-icon {
+      width: 40px; height: 40px; padding: 8px;
+      border-radius: 50%;
+      background: var(--gray-light);
+      color: var(--gray-dark);
+      border: none;
+      font-size: 18px; font-weight: 700;
+    }
+    .btn-icon:hover { background: #E9ECEF; }
+
+    .btn:disabled, .btn[disabled] {
+      background: #BDC3C7; color: var(--gray-med);
+      cursor: not-allowed; box-shadow: none;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       5. CARDS
+    ───────────────────────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border: 1px solid #E0E0E0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+      transition: all .3s ease-in-out;
+      overflow: hidden;
+    }
+    .card:hover {
+      box-shadow: 0 8px 16px rgba(0,0,0,.08);
+      transform: scale(1.02);
+    }
+    .card-img {
+      width: 100%; object-fit: cover;
+      background: var(--green-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px;
+    }
+    .card-body { padding: var(--m); }
+    .card-title { font-size: 20px; font-weight: 700; color: var(--gray-dark); }
+    .card-subtitle { font-size: 12px; color: var(--gray-med); margin-top: 2px; }
+    .card-meta { display: flex; gap: var(--m); margin-top: var(--s); font-size: 12px; color: var(--gray-med); }
+    .card-meta span { display: flex; align-items: center; gap: 4px; }
+    .rating { color: var(--orange); font-weight: 600; font-size: 14px; }
+
+    /* food card */
+    .food-card .card-img { height: 160px; }
+    .food-card .card-body { padding: 12px; }
+    .food-card .card-title { font-size: 14px; font-weight: 700; }
+    .food-card .card-desc  { font-size: 12px; color: var(--gray-med); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .food-card .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: var(--s); }
+    .price { font-size: 16px; font-weight: 700; color: var(--green); }
+
+    /* order card */
+    .order-card .card-body { padding: var(--m); }
+    .badge {
+      display: inline-block; padding: 3px 10px;
+      border-radius: 20px; font-size: 11px; font-weight: 600;
+    }
+    .badge-success  { background: var(--green-light); color: var(--success); }
+    .badge-warning  { background: #FEF9E7; color: var(--warning); }
+    .badge-error    { background: #FDEDEC; color: var(--error); }
+    .badge-info     { background: #EBF5FB; color: var(--info); }
+
+    /* ─────────────────────────────────────────────────────────
+       6. INPUT FIELDS
+    ───────────────────────────────────────────────────────── */
+    .field-group { display: flex; flex-direction: column; gap: 4px; max-width: 360px; }
+    .field-label { font-size: 12px; color: var(--gray-med); font-weight: 500; }
+    .field-label .req { color: var(--red); }
+
+    input[type="text"], input[type="email"], input[type="number"],
+    textarea, select {
+      height: 48px;
+      padding: 12px 14px;
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      background: var(--white);
+      font-size: 14px;
+      color: var(--gray-dark);
+      font-family: inherit;
+      transition: all .2s ease;
+      outline: none;
+      width: 100%;
+    }
+    textarea { height: 120px; resize: vertical; }
+    input::placeholder, textarea::placeholder { color: var(--gray-med); }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(46,204,113,.1);
+    }
+    .input-error { border-color: var(--red) !important; background: rgba(231,76,60,.05) !important; }
+    .error-msg  { font-size: 12px; color: var(--red); display: flex; align-items: center; gap: 4px; }
+
+    .search-wrap { position: relative; max-width: 360px; }
+    .search-wrap input { padding-left: 40px; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--gray-med); font-size: 16px; }
+
+    .qty-wrap { display: flex; align-items: center; gap: var(--s); }
+    .qty-wrap input { width: 80px; text-align: center; }
+    .qty-btn { width: 36px; height: 36px; border-radius: 8px; border: 1px solid #E0E0E0; background: var(--gray-light); font-size: 18px; font-weight: 700; cursor: pointer; color: var(--gray-dark); transition: background .2s; }
+    .qty-btn:hover { background: #E9ECEF; }
+
+    /* ─────────────────────────────────────────────────────────
+       7. UX COMPONENTS
+    ───────────────────────────────────────────────────────── */
+    /* Toast */
+    .toast-stack { display: flex; flex-direction: column; gap: var(--s); }
+    .toast {
+      display: flex; align-items: center; gap: var(--m);
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px; font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,.1);
+      max-width: 360px;
+    }
+    .toast-success { background: var(--green-light); color: var(--success); border-left: 4px solid var(--success); }
+    .toast-error   { background: #FDEDEC; color: var(--error);   border-left: 4px solid var(--error); }
+    .toast-info    { background: #EBF5FB; color: var(--info);    border-left: 4px solid var(--info); }
+    .toast-warning { background: #FEF9E7; color: var(--warning); border-left: 4px solid var(--warning); }
+    .toast-icon { font-size: 20px; }
+
+    /* Loading skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 6px;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .skel-card { background: var(--white); border-radius: 12px; padding: var(--m); border: 1px solid #E0E0E0; max-width: 260px; }
+    .skel-img  { height: 120px; margin-bottom: var(--m); }
+    .skel-line { height: 14px; margin-bottom: var(--s); }
+    .skel-line.short { width: 60%; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: var(--xxl) var(--xl);
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid #E0E0E0;
+      max-width: 380px;
+    }
+    .empty-icon { font-size: 64px; }
+    .empty-title { font-size: 16px; font-weight: 600; color: var(--gray-dark); margin-top: var(--m); }
+    .empty-sub   { font-size: 14px; color: var(--gray-med); margin-top: var(--s); }
+    .empty-state .btn { margin-top: var(--l); }
+
+    /* Semantic badges row */
+    .semantic-row { display: flex; flex-wrap: wrap; gap: var(--m); align-items: center; }
+
+    /* ─────────────────────────────────────────────────────────
+       8. RESPONSIVE
+    ───────────────────────────────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--m);
+    }
+    .restaurant-card .card-img { height: 180px; }
+
+    /* ─────────────────────────────────────────────────────────
+       Footer
+    ───────────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: var(--xl);
+      font-size: 12px;
+      color: var(--gray-med);
+      border-top: 1px solid #E0E0E0;
+      margin-top: var(--xxl);
+    }
+
+    @media (max-width: 768px) {
+      main { padding: var(--l) var(--m); }
+      .card-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .card-grid { grid-template-columns: 1fr; }
+      nav { gap: 4px; }
+      nav a { font-size: 12px; padding: 5px 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, .card { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Page Header ── -->
+<header class="page-header">
+  <h1>Food Delivery App</h1>
+  <p>Design System &amp; Component Library</p>
+</header>
+
+<!-- ── Navigation ── -->
+<nav>
+  <a href="#colors">Colors</a>
+  <a href="#typography">Typography</a>
+  <a href="#spacing">Spacing</a>
+  <a href="#buttons">Buttons</a>
+  <a href="#cards">Cards</a>
+  <a href="#inputs">Inputs</a>
+  <a href="#ux">UX Components</a>
+  <a href="#responsive">Responsive Grid</a>
+</nav>
+
+<main>
+
+  <!-- ══════════════════════════════════════════
+       1. COLOR PALETTE
+  ══════════════════════════════════════════ -->
+  <section id="colors">
+    <h2>1. Color Palette</h2>
+
+    <div class="group">
+      <h3>Primary Colors</h3>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#2ECC71"></div>
+          <div class="swatch-info"><strong>Primary Green</strong><code>#2ECC71</code></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#27AE60"></div>
+          <div class="swatch-info"><strong>Dark Green</strong><code>#27AE60</code></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#D5F4E6"></div>
+          <div class="swatch-info"><strong>Light Green</strong><code>#D5F4E6</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Secondary Colors</h3>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#FF6B35"></div>
+          <div class="swatch-info"><strong>Orange</strong><code>#FF6B35</code></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#E74C3C"></div>
+          <div class="swatch-info"><strong>Red</strong><code>#E74C3C</code></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#3498DB"></div>
+          <div class="swatch-info"><strong>Blue</strong><code>#3498DB</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Neutral Colors</h3>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#FFFFFF; border-bottom:1px solid #E0E0E0"></div>
+          <div class="swatch-info"><strong>White</strong><code>#FFFFFF</code></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#F8F9FA"></div>
+          <div class="swatch-info"><strong>Light Gray</strong><code>#F8F9FA</code></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#95A5A6"></div>
+          <div class="swatch-info"><strong>Medium Gray</strong><code>#95A5A6</code></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#2C3E50"></div>
+          <div class="swatch-info"><strong>Dark Gray</strong><code>#2C3E50</code></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#1A1A1A"></div>
+          <div class="swatch-info"><strong>Black</strong><code>#1A1A1A</code></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Semantic Colors</h3>
+      <div class="semantic-row">
+        <span class="badge badge-success" style="font-size:13px;padding:6px 14px;">&#10003; Success</span>
+        <span class="badge badge-warning" style="font-size:13px;padding:6px 14px;">&#9888; Warning</span>
+        <span class="badge badge-error"   style="font-size:13px;padding:6px 14px;">&#10007; Error</span>
+        <span class="badge badge-info"    style="font-size:13px;padding:6px 14px;">&#8505; Info</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       2. TYPOGRAPHY
+  ══════════════════════════════════════════ -->
+  <section id="typography">
+    <h2>2. Typography</h2>
+    <div class="type-scale">
+      <div><span class="type-label">H1 · 32px · 700</span>  <span style="font-size:32px;font-weight:700;line-height:40px;">Page Title</span></div>
+      <div><span class="type-label">H2 · 24px · 700</span>  <span style="font-size:24px;font-weight:700;line-height:32px;">Section Header</span></div>
+      <div><span class="type-label">H3 · 20px · 600</span>  <span style="font-size:20px;font-weight:600;line-height:28px;">Subsection Header</span></div>
+      <div><span class="type-label">Body Large · 16px · 400</span> <span style="font-size:16px;line-height:24px;">Primary content text for paragraphs.</span></div>
+      <div><span class="type-label">Body Regular · 14px · 400</span> <span style="font-size:14px;line-height:20px;">General body text, default size.</span></div>
+      <div><span class="type-label">Body Small · 12px · 400</span>  <span style="font-size:12px;color:#95A5A6;line-height:18px;">Secondary info, labels, metadata.</span></div>
+      <div><span class="type-label">Caption · 11px · 500</span>     <span style="font-size:11px;font-weight:500;color:#95A5A6;line-height:16px;">Timestamps · Hints · Tags</span></div>
+      <div><span class="type-label">Button · 14px · 600</span>      <span style="font-size:14px;font-weight:600;line-height:20px;">Button Label</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       3. SPACING
+  ══════════════════════════════════════════ -->
+  <section id="spacing">
+    <h2>3. Spacing System <small style="font-size:14px;font-weight:400;color:var(--gray-med);">(base unit 8px)</small></h2>
+    <div class="spacing-row">
+      <div>
+        <div class="spacing-box skeleton" style="width:4px;height:4px;background:var(--green-light);animation:none;"></div>
+        <div class="spacing-box" style="width:32px;height:4px;"></div>
+        <span class="label">XS · 4px</span>
+      </div>
+      <div>
+        <div class="spacing-box" style="width:40px;height:8px;"></div>
+        <span class="label">S · 8px</span>
+      </div>
+      <div>
+        <div class="spacing-box" style="width:52px;height:16px;"></div>
+        <span class="label">M · 16px</span>
+      </div>
+      <div>
+        <div class="spacing-box" style="width:64px;height:24px;"></div>
+        <span class="label">L · 24px</span>
+      </div>
+      <div>
+        <div class="spacing-box" style="width:76px;height:32px;"></div>
+        <span class="label">XL · 32px</span>
+      </div>
+      <div>
+        <div class="spacing-box" style="width:88px;height:48px;"></div>
+        <span class="label">XXL · 48px</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       4. BUTTONS
+  ══════════════════════════════════════════ -->
+  <section id="buttons">
+    <h2>4. Buttons</h2>
+
+    <div class="group">
+      <h3>Button Variants</h3>
+      <div class="row" style="align-items:center;">
+        <div>
+          <button class="btn btn-primary">Order Now</button>
+          <span class="label">Primary (CTA)</span>
+        </div>
+        <div>
+          <button class="btn btn-secondary">View Menu</button>
+          <span class="label">Secondary</span>
+        </div>
+        <div>
+          <button class="btn btn-tertiary">See All</button>
+          <span class="label">Tertiary</span>
+        </div>
+        <div>
+          <button class="btn btn-danger">Cancel Order</button>
+          <span class="label">Danger</span>
+        </div>
+        <div>
+          <button class="btn btn-primary" disabled>Unavailable</button>
+          <span class="label">Disabled</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Icon Buttons</h3>
+      <div class="row" style="align-items:center;">
+        <div>
+          <button class="btn-icon btn">+</button>
+          <span class="label">Round Icon</span>
+        </div>
+        <div>
+          <button class="btn btn-primary">&#128722; Add to Cart</button>
+          <span class="label">Icon + Text</span>
+        </div>
+        <div>
+          <button class="btn btn-secondary">&#128269; Search</button>
+          <span class="label">Search</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       5. CARDS
+  ══════════════════════════════════════════ -->
+  <section id="cards">
+    <h2>5. Card Components</h2>
+
+    <div class="group">
+      <h3>Restaurant Cards</h3>
+      <div class="card-grid">
+        <div class="card restaurant-card">
+          <div class="card-img" style="height:180px; font-size:56px;">&#127829;</div>
+          <div class="card-body">
+            <div class="card-title">Burger Palace</div>
+            <div class="card-subtitle">American · Fast Food</div>
+            <div class="card-meta">
+              <span class="rating">&#9733; 4.8</span>
+              <span>&#128205; 1.2 km</span>
+              <span>&#128336; 20–30 min</span>
+            </div>
+          </div>
+        </div>
+        <div class="card restaurant-card">
+          <div class="card-img" style="height:180px; font-size:56px;">&#127829;</div>
+          <div class="card-body">
+            <div class="card-title">Pizza House</div>
+            <div class="card-subtitle">Italian · Pizza</div>
+            <div class="card-meta">
+              <span class="rating">&#9733; 4.5</span>
+              <span>&#128205; 2.4 km</span>
+              <span>&#128336; 30–45 min</span>
+            </div>
+          </div>
+        </div>
+        <div class="card restaurant-card">
+          <div class="card-img" style="height:180px; font-size:56px; background:#FFF3E0;">&#127843;</div>
+          <div class="card-body">
+            <div class="card-title">Sushi World</div>
+            <div class="card-subtitle">Japanese · Sushi</div>
+            <div class="card-meta">
+              <span class="rating">&#9733; 4.9</span>
+              <span>&#128205; 3.1 km</span>
+              <span>&#128336; 40–55 min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Food Item Cards</h3>
+      <div class="card-grid">
+        <div class="card food-card">
+          <div class="card-img" style="height:160px; font-size:52px;">&#127828;</div>
+          <div class="card-body">
+            <div class="card-title">Classic Burger</div>
+            <div class="card-desc">Beef patty, lettuce, tomato, special sauce</div>
+            <div class="card-footer">
+              <span class="price">$8.99</span>
+              <button class="btn-icon btn" style="border-radius:8px;">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card food-card">
+          <div class="card-img" style="height:160px; font-size:52px; background:#FFF3E0;">&#127829;</div>
+          <div class="card-body">
+            <div class="card-title">Margherita Pizza</div>
+            <div class="card-desc">Tomato, mozzarella, basil, olive oil</div>
+            <div class="card-footer">
+              <span class="price">$12.50</span>
+              <button class="btn-icon btn" style="border-radius:8px;">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="card food-card">
+          <div class="card-img" style="height:160px; font-size:52px; background:#E8F4FD;">&#127843;</div>
+          <div class="card-body">
+            <div class="card-title">Salmon Sushi Set</div>
+            <div class="card-desc">8 pieces, soy sauce, wasabi, ginger</div>
+            <div class="card-footer">
+              <span class="price">$18.00</span>
+              <button class="btn-icon btn" style="border-radius:8px;">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Order Status Cards</h3>
+      <div class="row">
+        <div class="card" style="max-width:280px;">
+          <div class="card-body">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11px;color:var(--gray-med);">Order #ORD-2041</span>
+              <span class="badge badge-success">Delivered</span>
+            </div>
+            <div style="margin:var(--m) 0; font-size:13px; color:var(--gray-med);">3 items · Burger Palace</div>
+            <div style="font-size:16px;font-weight:700;">$26.47</div>
+            <button class="btn btn-secondary" style="margin-top:var(--m);width:100%;padding:8px 16px;font-size:12px;">Reorder</button>
+          </div>
+        </div>
+        <div class="card" style="max-width:280px;">
+          <div class="card-body">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11px;color:var(--gray-med);">Order #ORD-2042</span>
+              <span class="badge badge-warning">On the Way</span>
+            </div>
+            <div style="margin:var(--m) 0; font-size:13px; color:var(--gray-med);">2 items · Pizza House</div>
+            <div style="font-size:16px;font-weight:700;">$19.99</div>
+            <button class="btn btn-primary" style="margin-top:var(--m);width:100%;padding:8px 16px;font-size:12px;">Track Order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       6. INPUT FIELDS
+  ══════════════════════════════════════════ -->
+  <section id="inputs">
+    <h2>6. Input Fields</h2>
+
+    <div class="row">
+      <div class="col" style="max-width:400px;">
+        <div class="group">
+          <h3>Text Input</h3>
+          <div class="field-group">
+            <label class="field-label">Full Name <span class="req">*</span></label>
+            <input type="text" placeholder="e.g. Alex Johnson" />
+          </div>
+        </div>
+
+        <div class="group">
+          <h3>Search Input</h3>
+          <div class="search-wrap">
+            <span class="search-icon">&#128269;</span>
+            <input type="text" placeholder="Search restaurants, dishes..." />
+          </div>
+        </div>
+
+        <div class="group">
+          <h3>Error State</h3>
+          <div class="field-group">
+            <label class="field-label">Email <span class="req">*</span></label>
+            <input type="email" class="input-error" value="not-valid" />
+            <span class="error-msg">&#9888; Please enter a valid email address.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col" style="max-width:400px;">
+        <div class="group">
+          <h3>Quantity Input</h3>
+          <div class="qty-wrap">
+            <button class="qty-btn" onclick="var i=this.nextElementSibling;if(+i.value>1)i.value--">−</button>
+            <input type="number" value="1" min="1" />
+            <button class="qty-btn" onclick="this.previousElementSibling.value++">+</button>
+          </div>
+        </div>
+
+        <div class="group">
+          <h3>Select Dropdown</h3>
+          <div class="field-group">
+            <label class="field-label">Delivery Address</label>
+            <select>
+              <option>Home – 123 Main St</option>
+              <option>Work – 456 Office Ave</option>
+              <option>+ Add new address</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="group">
+          <h3>Textarea</h3>
+          <div class="field-group">
+            <label class="field-label">Special Instructions</label>
+            <textarea placeholder="e.g. No onions, extra sauce..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       7. UX COMPONENTS
+  ══════════════════════════════════════════ -->
+  <section id="ux">
+    <h2>7. UX Components</h2>
+
+    <div class="group">
+      <h3>Toast Notifications</h3>
+      <div class="toast-stack">
+        <div class="toast toast-success"><span class="toast-icon">&#10003;</span> Order confirmed! Your food is being prepared.</div>
+        <div class="toast toast-error"  ><span class="toast-icon">&#9888;</span> Payment failed. Please try again.</div>
+        <div class="toast toast-info"   ><span class="toast-icon">&#8505;</span> New offer: 20% off on your next order.</div>
+        <div class="toast toast-warning"><span class="toast-icon">&#9201;</span> Your order is slightly delayed – 10 extra mins.</div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Status Badges</h3>
+      <div class="semantic-row">
+        <span class="badge badge-success">Order Confirmed</span>
+        <span class="badge badge-warning">Low Stock</span>
+        <span class="badge badge-error">Cancelled</span>
+        <span class="badge badge-info">New Offer</span>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Loading Skeleton</h3>
+      <div class="skel-card">
+        <div class="skel-img skeleton"></div>
+        <div class="skel-line skeleton"></div>
+        <div class="skel-line skeleton short"></div>
+        <div class="skel-line skeleton" style="height:10px;margin-top:var(--m);"></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Empty State</h3>
+      <div class="empty-state">
+        <div class="empty-icon">&#128722;</div>
+        <div class="empty-title">Your cart is empty</div>
+        <div class="empty-sub">Add items from a restaurant to get started.</div>
+        <button class="btn btn-primary">Browse Restaurants</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       8. RESPONSIVE GRID
+  ══════════════════════════════════════════ -->
+  <section id="responsive">
+    <h2>8. Responsive Card Grid</h2>
+    <p style="color:var(--gray-med);margin-bottom:var(--l);">Resize the browser window to see breakpoints in action: 3–4 cols (desktop), 2 cols (tablet), 1 col (mobile).</p>
+    <div class="card-grid">
+      <div class="card restaurant-card">
+        <div class="card-img" style="height:140px;font-size:44px;">&#127829;</div>
+        <div class="card-body"><div class="card-title">Burger Palace</div><div class="card-subtitle">American · Fast Food</div></div>
+      </div>
+      <div class="card restaurant-card">
+        <div class="card-img" style="height:140px;font-size:44px;background:#FFF3E0;">&#127829;</div>
+        <div class="card-body"><div class="card-title">Pizza House</div><div class="card-subtitle">Italian · Pizza</div></div>
+      </div>
+      <div class="card restaurant-card">
+        <div class="card-img" style="height:140px;font-size:44px;background:#E8F4FD;">&#127843;</div>
+        <div class="card-body"><div class="card-title">Sushi World</div><div class="card-subtitle">Japanese · Sushi</div></div>
+      </div>
+      <div class="card restaurant-card">
+        <div class="card-img" style="height:140px;font-size:44px;background:#FDE8F0;">&#127837;</div>
+        <div class="card-body"><div class="card-title">Taco Town</div><div class="card-subtitle">Mexican · Street Food</div></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2026 Food Delivery App · Design System &mdash; built from <strong>DESIGN.md</strong>
+</footer>
+
+</body>
+</html>

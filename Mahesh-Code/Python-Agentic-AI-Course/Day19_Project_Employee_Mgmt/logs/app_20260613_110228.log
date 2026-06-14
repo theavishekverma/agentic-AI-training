@@ -1,0 +1,10 @@
+2026-06-13 11:02:28,933 - employee_api.main - INFO - FastAPI application initialized
+2026-06-13 11:02:28,934 - employee_api.main - INFO - CORS enabled for origins: ['http://localhost:3000']
+2026-06-13 11:02:28,973 - employee_api.main - INFO - All routers included
+2026-06-13 11:02:43,828 - employee_api.employee - WARNING - Deleting employee with ID: 1
+2026-06-13 11:02:43,828 - employee_api.employee_service - DEBUG - EmployeeService initialized
+2026-06-13 11:02:43,829 - employee_api.employee_service - DEBUG - Reading employees from db/employee.json
+2026-06-13 11:02:43,831 - employee_api.employee_service - DEBUG - Successfully read 4 employees from file
+2026-06-13 11:02:43,832 - employee_api.employee_service - DEBUG - Writing 3 employees to db/employee.json
+2026-06-13 11:02:43,835 - employee_api.employee_service - INFO - Successfully wrote 3 employees to file
+2026-06-13 11:02:43,836 - employee_api.employee - INFO - Employee deleted successfully: ID 1

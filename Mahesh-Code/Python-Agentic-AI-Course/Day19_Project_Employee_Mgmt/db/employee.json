@@ -1,0 +1,32 @@
+[
+    {
+        "id": 2,
+        "name": "Vishal",
+        "age": 40,
+        "department": "HR"
+    },
+    {
+        "id": 3,
+        "name": "Avishek",
+        "age": 38,
+        "department": "Marketing"
+    },
+    {
+        "id": 4,
+        "name": "Sagar",
+        "age": 10,
+        "department": "HR"
+    },
+    {
+        "id": 5,
+        "name": "Avishek",
+        "age": 36,
+        "department": "Finance"
+    },
+    {
+        "id": 6,
+        "name": "Sachin",
+        "age": 21,
+        "department": "Networking"
+    }
+]

@@ -1,0 +1,5 @@
+tcs: UP
+reliance: UP
+infy: UP
+hcl: NEUTRAL
+microsoft: DOWN
