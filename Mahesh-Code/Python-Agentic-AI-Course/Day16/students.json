@@ -1,0 +1,14 @@
+[
+    {
+        "student_id": 1,
+        "student_name": "Vishal",
+        "student_course": "Python Full Stack",
+        "student_fees": 60000000.0
+    },
+    {
+        "student_id": 3,
+        "student_name": "Mansi",
+        "student_course": ".net Full Stack",
+        "student_fees": 20000.0
+    }
+]

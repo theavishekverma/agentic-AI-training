@@ -1,0 +1,36 @@
+2026-06-14 09:39:30,882 - employee_api.main - INFO - FastAPI application initialized
+2026-06-14 09:39:30,883 - employee_api.main - INFO - CORS enabled for origins: ['http://localhost:8001']
+2026-06-14 09:39:30,894 - employee_api.main - INFO - All routers included
+2026-06-14 09:43:45,635 - employee_api.main - DEBUG - -> GET / from 127.0.0.1
+2026-06-14 09:43:45,637 - employee_api.main - DEBUG - Root endpoint accessed
+2026-06-14 09:43:45,638 - employee_api.main - INFO - <- GET / | Status: 200 | Duration: 0.003s
+2026-06-14 09:43:45,761 - employee_api.main - DEBUG - -> GET /favicon.ico from 127.0.0.1
+2026-06-14 09:43:45,766 - employee_api.main - INFO - <- GET /favicon.ico | Status: 404 | Duration: 0.001s
+2026-06-14 09:43:53,406 - employee_api.main - DEBUG - -> GET / from 127.0.0.1
+2026-06-14 09:43:53,407 - employee_api.main - DEBUG - Root endpoint accessed
+2026-06-14 09:43:53,408 - employee_api.main - INFO - <- GET / | Status: 200 | Duration: 0.002s
+2026-06-14 09:44:09,229 - employee_api.main - DEBUG - -> GET /docs from 127.0.0.1
+2026-06-14 09:44:09,230 - employee_api.main - INFO - <- GET /docs | Status: 200 | Duration: 0.001s
+2026-06-14 09:44:09,363 - employee_api.main - DEBUG - -> GET /openapi.json from 127.0.0.1
+2026-06-14 09:44:09,464 - employee_api.main - INFO - <- GET /openapi.json | Status: 200 | Duration: 0.101s
+2026-06-14 09:44:16,960 - employee_api.main - DEBUG - -> GET /employees/ from 127.0.0.1
+2026-06-14 09:44:16,962 - employee_api.employee - INFO - Fetching all employees
+2026-06-14 09:44:16,962 - employee_api.employee_service - DEBUG - EmployeeService initialized
+2026-06-14 09:44:16,962 - employee_api.employee_service - DEBUG - Reading employees from db/employee.json
+2026-06-14 09:44:16,963 - employee_api.employee_service - DEBUG - Successfully read 5 employees from file
+2026-06-14 09:44:16,963 - employee_api.employee - INFO - Successfully fetched 5 employees
+2026-06-14 09:44:16,964 - employee_api.main - INFO - <- GET /employees/ | Status: 200 | Duration: 0.004s
+2026-06-14 09:45:03,217 - employee_api.main - DEBUG - -> GET /employees/ from 127.0.0.1
+2026-06-14 09:45:03,217 - employee_api.employee - INFO - Fetching all employees
+2026-06-14 09:45:03,218 - employee_api.employee_service - DEBUG - EmployeeService initialized
+2026-06-14 09:45:03,218 - employee_api.employee_service - DEBUG - Reading employees from db/employee.json
+2026-06-14 09:45:03,218 - employee_api.employee_service - DEBUG - Successfully read 5 employees from file
+2026-06-14 09:45:03,218 - employee_api.employee - INFO - Successfully fetched 5 employees
+2026-06-14 09:45:03,219 - employee_api.main - INFO - <- GET /employees/ | Status: 200 | Duration: 0.003s
+2026-06-14 09:45:11,060 - employee_api.main - DEBUG - -> GET /employees/ from 127.0.0.1
+2026-06-14 09:45:11,061 - employee_api.employee - INFO - Fetching all employees
+2026-06-14 09:45:11,061 - employee_api.employee_service - DEBUG - EmployeeService initialized
+2026-06-14 09:45:11,061 - employee_api.employee_service - DEBUG - Reading employees from db/employee.json
+2026-06-14 09:45:11,062 - employee_api.employee_service - DEBUG - Successfully read 5 employees from file
+2026-06-14 09:45:11,062 - employee_api.employee - INFO - Successfully fetched 5 employees
+2026-06-14 09:45:11,063 - employee_api.main - INFO - <- GET /employees/ | Status: 200 | Duration: 0.003s

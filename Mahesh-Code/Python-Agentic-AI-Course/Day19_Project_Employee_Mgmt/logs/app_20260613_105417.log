@@ -1,0 +1,3 @@
+2026-06-13 10:54:17,900 - employee_api.main - INFO - FastAPI application initialized
+2026-06-13 10:54:17,902 - employee_api.main - INFO - CORS enabled for origins: ['http://localhost:3000']
+2026-06-13 10:54:17,920 - employee_api.main - INFO - All routers included
