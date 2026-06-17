@@ -1,0 +1,26 @@
+[
+    {
+        "emp_id": 1,
+        "name": "Avishek",
+        "salary": 1000.0,
+        "department": "HR"
+    },
+    {
+        "emp_id": 10,
+        "name": "Khushi",
+        "salary": 1.0,
+        "department": "IT"
+    },
+    {
+        "emp_id": 11,
+        "name": "Abhilasha",
+        "salary": 1.0,
+        "department": "Finance"
+    },
+    {
+        "emp_id": 12,
+        "name": "Abhilasha NAlage",
+        "salary": 1.0,
+        "department": "Finance"
+    }
+]
