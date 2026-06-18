@@ -1,8 +1,0 @@
-2026-06-13 14:07:20,015 - employee_api.main - INFO - FastAPI application initialized
-2026-06-13 14:07:20,016 - employee_api.main - INFO - CORS enabled for origins: ['http://localhost:3000']
-2026-06-13 14:07:20,034 - employee_api.main - INFO - All routers included
-2026-06-13 14:08:01,515 - employee_api.employee - INFO - Fetching all employees
-2026-06-13 14:08:01,516 - employee_api.employee_service - DEBUG - EmployeeService initialized
-2026-06-13 14:08:01,517 - employee_api.employee_service - DEBUG - Reading employees from db/employee.json
-2026-06-13 14:08:01,519 - employee_api.employee_service - DEBUG - Successfully read 3 employees from file
-2026-06-13 14:08:01,520 - employee_api.employee - INFO - Successfully fetched 3 employees
