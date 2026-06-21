@@ -1,1 +1,1 @@
-DATABASE_URL = "mysql+pymysql://root:Avishek@1312@localhost/employee_management"
+DATABASE_URL = "mysql+pymysql://root:Avishek%401312@localhost/employee_management"

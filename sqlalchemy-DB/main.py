@@ -21,8 +21,3 @@ app.include_router(employees.router)
 async def root():
     """Root endpoint"""
     return {"message": "Welcome to Employee Management API"}
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
