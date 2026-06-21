@@ -1,4 +1,5 @@
 {
     "python-envs.defaultEnvManager": "ms-python.python:system",
-    "chat.permissions.default": "autoApprove"
+    "chat.permissions.default": "autoApprove",
+    "claudeCodeChat.permissions.yoloMode": true
 }
